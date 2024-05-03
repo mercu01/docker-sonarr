@@ -25,7 +25,7 @@ COPY \
 RUN if [ "$ARCH" = "x64" ]; then \
         cp /tmp/linux-x64.tar.gz /tmp/sonarr.tar.gz; \
     elif [ "$ARCH" = "arm64" ]; then \
-        cp /tmp/linux-arm64.tar.gz /tmp/sonarr.tar.gz; \
+        cp /tmp/linux-musl-arm64.tar /tmp/sonarr.tar.gz; \
     fi
 RUN \
   echo "**** install packages ****" && \
