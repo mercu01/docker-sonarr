@@ -14,7 +14,8 @@ LABEL maintainer="mercu"
 ENV XDG_CONFIG_HOME="/config/xdg"
 ENV SONARR_CHANNEL="v4-stable"
 ENV SONARR_BRANCH="main"
-RUN echo $ARCH
+RUN \
+    echo "${ARCH}"
 COPY \
     linux-x64.tar.gz \
     /tmp/linux-x64.tar.gz
