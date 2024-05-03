@@ -20,8 +20,8 @@ COPY \
     linux-x64.tar.gz \
     /tmp/linux-x64.tar.gz
 COPY \
-    linux-arm64.tar.gz \
-    /tmp/linux-arm64.tar.gz
+    linux-musl-arm64.tar.gz \
+    /tmp/linux-musl-arm64.tar.gz
 RUN if [ "$ARCH" = "x64" ]; then \
         cp /tmp/linux-x64.tar.gz /tmp/sonarr.tar.gz; \
     elif [ "$ARCH" = "arm64" ]; then \
