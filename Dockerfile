@@ -64,9 +64,6 @@ RUN \
 # add local files
 COPY root/ /
 
-RUN find /etc/s6-overlay -type d -exec chmod 777 {} \;
-RUN find /app -type d -exec chmod 777 {} \;
-
 # ports and volumes
 EXPOSE 8989
 
