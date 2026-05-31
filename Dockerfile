@@ -18,35 +18,35 @@ ENV XDG_CONFIG_HOME="/config/xdg" \
   TMPDIR=/run/sonarr-temp
 
 COPY \
-    linux-musl-x64.tar.gz \
-    /tmp/linux-musl-x64.tar.gz
+  linux-musl-x64.tar.gz \
+  /tmp/linux-musl-x64.tar.gz
 COPY \
-    linux-musl-arm64.tar.gz \
-    /tmp/linux-musl-arm64.tar.gz
+  linux-musl-arm64.tar.gz \
+  /tmp/linux-musl-arm64.tar.gz
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
-        cp /tmp/linux-musl-x64.tar.gz /tmp/sonarr.tar.gz; \
-    elif [ "$TARGETARCH" = "arm64" ]; then \
-        cp /tmp/linux-musl-arm64.tar.gz /tmp/sonarr.tar.gz; \
-    fi
+  cp /tmp/linux-musl-x64.tar.gz /tmp/sonarr.tar.gz; \
+  elif [ "$TARGETARCH" = "arm64" ]; then \
+  cp /tmp/linux-musl-arm64.tar.gz /tmp/sonarr.tar.gz; \
+  fi
 
 RUN \
   echo "**** install packages ****" && \
   apk add --no-cache \
-    icu-libs \
-    sqlite-libs \
-    xmlstarlet && \
+  icu-libs \
+  sqlite-libs \
+  xmlstarlet && \
   echo "**** install sonarr ****" && \
   mkdir -p /app/sonarr/bin && \
   tar xzf \
-    /tmp/sonarr.tar.gz -C \
+  /tmp/sonarr.tar.gz -C \
     /app/sonarr/bin && \
   chmod +x /app/sonarr/bin/Sonarr && \
   echo -e "UpdateMethod=docker\nBranch=${SONARR_BRANCH}\nPackageVersion=${VERSION:-LocalBuild}\nPackageAuthor=[linuxserver.io](https://linuxserver.io)" > /app/sonarr/package_info && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
   rm -rf \
-    /app/sonarr/bin/Sonarr.Update \
-    /tmp/*
+  /app/sonarr/bin/Sonarr.Update \
+  /tmp/*
 
 # add local files
 COPY root/ /
