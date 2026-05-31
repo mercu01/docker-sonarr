@@ -28,7 +28,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
     elif [ "$TARGETARCH" = "arm64" ]; then \
         cp /tmp/linux-musl-arm64.tar.gz /tmp/sonarr.tar.gz; \
     fi
-    
+
 RUN \
   echo "**** install packages ****" && \
   apk add --no-cache \
@@ -39,7 +39,8 @@ RUN \
   mkdir -p /app/sonarr/bin && \
   tar xzf \
     /tmp/sonarr.tar.gz -C \
-    /app/sonarr/bin --strip-components=1 && \
+    /app/sonarr/bin && \
+  chmod +x /app/sonarr/bin/Sonarr && \
   echo -e "UpdateMethod=docker\nBranch=${SONARR_BRANCH}\nPackageVersion=${VERSION:-LocalBuild}\nPackageAuthor=[linuxserver.io](https://linuxserver.io)" > /app/sonarr/package_info && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
