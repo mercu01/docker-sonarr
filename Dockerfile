@@ -6,31 +6,16 @@ FROM ghcr.io/linuxserver/baseimage-alpine:3.23
 ARG BUILD_DATE
 ARG VERSION
 ARG SONARR_VERSION
-ARG TARGETPLATFORM
-ARG TARGETOS
 ARG TARGETARCH
-ARG TARGETVARIANT
-ARG BUILDPLATFORM
-ARG BUILDOS
-ARG BUILDARCH
-ARG BUILDVARIANT
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="thespad"
 
 # set environment variables
-ENV XDG_CONFIG_HOME="/config/xdg"
-ENV SONARR_CHANNEL="v4-stable"
-ENV SONARR_BRANCH="main"
-RUN echo "I'm building for ${TARGETPLATFORM}"
-RUN echo "I'm TARGETOS for ${TARGETOS}"
-RUN echo "I'm TARGETARCH for ${TARGETARCH}"
-RUN echo "I'm TARGETVARIANT for ${TARGETVARIANT}"
-RUN echo "I'm BUILDPLATFORM for ${BUILDPLATFORM}"
-RUN echo "I'm BUILDOS for ${BUILDOS}"
-RUN echo "I'm BUILDARCH for ${BUILDARCH}"
-RUN echo "I'm BUILDVARIANT for ${BUILDVARIANT}"
-# environment variables
-ENV S6_VERBOSITY=5
+ENV XDG_CONFIG_HOME="/config/xdg" \
+  SONARR_CHANNEL="v4-stable" \
+  SONARR_BRANCH="main" \
+  COMPlus_EnableDiagnostics=0 \
+  TMPDIR=/run/sonarr-temp
 
 COPY \
     linux-musl-x64.tar.gz \
@@ -56,6 +41,7 @@ RUN \
     /tmp/sonarr.tar.gz -C \
     /app/sonarr/bin --strip-components=1 && \
   echo -e "UpdateMethod=docker\nBranch=${SONARR_BRANCH}\nPackageVersion=${VERSION:-LocalBuild}\nPackageAuthor=[linuxserver.io](https://linuxserver.io)" > /app/sonarr/package_info && \
+  printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
   rm -rf \
     /app/sonarr/bin/Sonarr.Update \
