@@ -32,6 +32,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
 RUN \
   echo "**** install packages ****" && \
   apk add --no-cache \
+  ffmpeg \
   icu-libs \
   sqlite-libs \
   xmlstarlet && \
@@ -41,6 +42,7 @@ RUN \
   /tmp/sonarr.tar.gz -C \
   /app/sonarr/bin --strip-components=1 && \
   chmod +x /app/sonarr/bin/Sonarr && \
+  chmod +x /app/sonarr/bin/ffprobe && \
   echo -e "UpdateMethod=docker\nBranch=${SONARR_BRANCH}\nPackageVersion=${VERSION:-LocalBuild}\nPackageAuthor=[linuxserver.io](https://linuxserver.io)" > /app/sonarr/package_info && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
