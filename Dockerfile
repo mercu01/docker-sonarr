@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.23
+FROM ghcr.io/linuxserver/baseimage-alpine:3.24
 
 # set version label
 ARG BUILD_DATE
@@ -34,6 +34,7 @@ RUN \
   apk add --no-cache \
   ffmpeg \
   icu-libs \
+  krb5-libs \
   sqlite-libs \
   xmlstarlet && \
   echo "**** install sonarr ****" && \

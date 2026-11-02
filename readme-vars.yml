@@ -74,11 +74,15 @@ init_diagram: |
     svc-sonarr -> legacy-services
   }
   Base Images: {
-    "baseimage-alpine:3.23"
+    "baseimage-alpine:3.24"
   }
   "sonarr:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "19.10.26:", desc: "Add krb5-libs for better postgresql support."}
+  - {date: "12.10.26:", desc: "Update `develop` branch to v5. New v5 installs will write initial credentials to container log."}
+  - {date: "09.07.26:", desc: "Workaround malformed ncurses database."}
+  - {date: "04.07.26:", desc: "Rebase to Alpine 3.24."}
   - {date: "15.01.26:", desc: "Rebase to Alpine 3.23."}
   - {date: "05.07.25:", desc: "Rebase to Alpine 3.22."}
   - {date: "09.01.25:", desc: "Fix rootless entrypoint."}
